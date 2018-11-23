@@ -41,15 +41,14 @@ public class CardSql extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS card(" +
                 "codigo INTEGER PRIMARY KEY NOT NULL, " +
                 "titulo TEXT" +
-                ");" +
+                ");");
 
-                " CREATE TABLE IF NOT EXISTS aula(" +
+        db.execSQL(" CREATE TABLE IF NOT EXISTS aula(" +
                 "codigo INTEGER PRIMARY KEY NOT NULL," +
                 "titulo TEXT," +
                 "id_card INTEGER," +
                 "FOREIGN KEY(id_card) REFERENCES card(codigo)" +
                 ");");
-
     }
 
     @Override
