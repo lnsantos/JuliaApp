@@ -39,12 +39,12 @@ public class CardSql extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS card(" +
-                "codigo INTEGER AUTOINCREMENT PRIMARY KEY NOT NULL, " +
+                "codigo INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                 "titulo TEXT" +
                 ");");
 
         db.execSQL(" CREATE TABLE IF NOT EXISTS aula(" +
-                "codigo INTEGER AUTOINCREMENT PRIMARY KEY NOT NULL," +
+                "codigo INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL," +
                 "titulo TEXT," +
                 "id_card INTEGER," +
                 "FOREIGN KEY(id_card) REFERENCES card(codigo)" +
