@@ -72,7 +72,7 @@ public class CardSql extends SQLiteOpenHelper {
     }
 
     private List<Card> toList(Cursor c){
-        List<Card> cards = null;
+        List<Card> cards = new ArrayList<>();
         if(c.moveToFirst()){
             cards = new ArrayList<>();
             do{
