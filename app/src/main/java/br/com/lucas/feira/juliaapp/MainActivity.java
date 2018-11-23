@@ -29,8 +29,7 @@ public class MainActivity extends AppCompatActivity implements CardAdapterInterf
     CardSql cardSql;
     private CardAdapter cardAdapter;
 
-    @BindView(R.id.floatingActionButton)
-    FloatingActionButton c;
+
 
 
     @Override
@@ -47,13 +46,6 @@ public class MainActivity extends AppCompatActivity implements CardAdapterInterf
         rView.setLayoutManager(new LinearLayoutManager(this));
         rView.setAdapter(cardAdapter);
 
-        c.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent tela = new Intent(MainActivity.this,NewCard.class);
-                startActivityForResult(tela, 1);
-            }
-        });
     }
 
     @Override

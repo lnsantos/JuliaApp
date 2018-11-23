@@ -20,6 +20,7 @@ import br.com.lucas.feira.juliaapp.CardSql;
 import br.com.lucas.feira.juliaapp.Entidade.Aula;
 import br.com.lucas.feira.juliaapp.Entidade.Card;
 import br.com.lucas.feira.juliaapp.Interfaces.CardAdapterInterface;
+import br.com.lucas.feira.juliaapp.NewCard;
 import br.com.lucas.feira.juliaapp.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +28,8 @@ import butterknife.ButterKnife;
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.viewHolder> {
 
     List<Card> cards;
+    List<Aula> aulas;
+
     Context context;
     CardAdapterInterface cardAdapterInterface;
 
@@ -35,6 +38,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.viewHolder> {
         this.context = context;
         this.cardAdapterInterface = cardAdapterInterface;
     }
+
+    public CardAdapter(List<Aula> aulas, Context context) {
+    this.aulas = aulas;
+    this.context = context;
+    }
+
 
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
