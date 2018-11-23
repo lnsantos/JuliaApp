@@ -3,6 +3,7 @@ package br.com.lucas.feira.juliaapp.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +21,7 @@ import br.com.lucas.feira.juliaapp.CardSql;
 import br.com.lucas.feira.juliaapp.Entidade.Aula;
 import br.com.lucas.feira.juliaapp.Entidade.Card;
 import br.com.lucas.feira.juliaapp.Interfaces.CardAdapterInterface;
-import br.com.lucas.feira.juliaapp.NewCard;
+import br.com.lucas.feira.juliaapp.MateriasActivity;
 import br.com.lucas.feira.juliaapp.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +29,6 @@ import butterknife.ButterKnife;
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.viewHolder> {
 
     List<Card> cards;
-    List<Aula> aulas;
 
     Context context;
     CardAdapterInterface cardAdapterInterface;
@@ -38,12 +38,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.viewHolder> {
         this.context = context;
         this.cardAdapterInterface = cardAdapterInterface;
     }
-
-    public CardAdapter(List<Aula> aulas, Context context) {
-    this.aulas = aulas;
-    this.context = context;
-    }
-
 
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -55,6 +49,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.viewHolder> {
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         final Card c = cards.get(position);
         holder.titulo.setText(c.getTitulo());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MateriasActivity.class);
+                intent.putExtra("id_dia", c.getCodigo());
+                context.startActivity(intent);
+            }
+        });
 
         holder.btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,13 +92,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.viewHolder> {
                 dialogConstruido.show();
             }
         });
-
-        holder.cView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "OK", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
@@ -116,7 +112,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.viewHolder> {
         Button btn;
         @BindView(R.id.cardID)
         CardView cView;
-        String codigo;
+
         public viewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

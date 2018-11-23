@@ -5,6 +5,16 @@ public class Aula {
     private String titulo;
     private Integer id_card;
 
+    public Aula(Integer codigo, String titulo, Integer id_card) {
+        this.codigo = codigo;
+        this.titulo = titulo;
+        this.id_card = id_card;
+    }
+
+    public Aula() {
+
+    }
+
     public Integer getCodigo() {
         return codigo;
     }

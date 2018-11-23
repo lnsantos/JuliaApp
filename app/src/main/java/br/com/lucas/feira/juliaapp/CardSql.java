@@ -56,6 +56,20 @@ public class CardSql extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+    public List<Aula> listaMaterias(int idDia){
+        Cursor c = db.query("aula", null, "codigo = ?", new String[]{String.valueOf(idDia)}, null, null, null);
+        return toListAulas(c);
+    }
+    private List<Aula> toListAulas(Cursor c){
+        List<Aula> aulas = new ArrayList<>();
+        if(c.moveToFirst()){
+            aulas = new ArrayList<>();
+            do{
+                aulas.add(new Aula(c.getInt(c.getColumnIndex("codigo")),c.getString(c.getColumnIndex("titulo")),c.getInt(c.getColumnIndex("id_card"))) );
+            }while(c.moveToNext());
+        }
+        return aulas;
+    }
 
     public boolean novaMateria(Aula a) {
         ContentValues cv = new ContentValues();

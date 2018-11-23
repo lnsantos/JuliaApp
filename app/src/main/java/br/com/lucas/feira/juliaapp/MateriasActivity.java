@@ -14,27 +14,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.lucas.feira.juliaapp.Adapter.CardAdapter;
+import br.com.lucas.feira.juliaapp.Adapter.MateriaAdapter;
 import br.com.lucas.feira.juliaapp.Entidade.Aula;
 import br.com.lucas.feira.juliaapp.Entidade.Card;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NewCard extends AppCompatActivity {
+public class MateriasActivity extends AppCompatActivity {
 
     @BindView(R.id.recyclerMateria)
     RecyclerView rView;
     CardSql cardSql;
     List<Aula> aulas;
-    private CardAdapter cardAdapter;
+    private MateriaAdapter cardAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_card);
         ButterKnife.bind(this);
-        aulas = new ArrayList();
+
         cardSql = CardSql.getInstance(this);
 
-        cardAdapter = new CardAdapter(aulas,this);
+        int idDia = getIntent().getIntExtra("id_dia", -1);
+
+        if (idDia > -1) {
+            aulas = cardSql.listaMaterias(idDia);
+        }
+        cardAdapter = new MateriaAdapter(aulas,this);
 
         rView.setLayoutManager(new LinearLayoutManager(this));
         rView.setAdapter(cardAdapter);
