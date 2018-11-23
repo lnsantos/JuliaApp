@@ -43,10 +43,10 @@ public class CardSql extends SQLiteOpenHelper {
                 "titulo TEXT" +
                 ");" +
 
-                "CREATE TABLE IF NOT EXISTS aula(" +
+                " CREATE TABLE IF NOT EXISTS aula(" +
                 "codigo INTEGER PRIMARY KEY NOT NULL," +
-                "titulo TEXT" +
-                "id_card INTEGER" +
+                "titulo TEXT," +
+                "id_card INTEGER," +
                 "FOREIGN KEY(id_card) REFERENCES card(codigo)" +
                 ");");
 
@@ -57,18 +57,18 @@ public class CardSql extends SQLiteOpenHelper {
 
     }
 
-    public boolean novaMateria(Aula a,Integer id_card) {
+    public boolean novaMateria(Aula a) {
         ContentValues cv = new ContentValues();
         cv.put("titulo", a.getTitulo());
         cv.put("id_card",a.getId_card());
 
-        return db.insert("aula","",cv) > 0;
+        return db.insert("aula",null ,cv) > 0;
     }
 
     public boolean novoCard(Card cs){
         ContentValues cv = new ContentValues();
         cv.put("titulo",cs.getTitulo());
-        return db.insert("card","",cv) > 0;
+        return db.insert("card",null,cv) > 0;
     }
 
     private List<Card> toList(Cursor c){

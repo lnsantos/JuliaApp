@@ -3,6 +3,7 @@ package br.com.lucas.feira.juliaapp.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,13 +37,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.viewHolder> {
     }
 
     @Override
-    public viewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.card, parent, false);
         return new viewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(viewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         final Card c = cards.get(position);
         holder.titulo.setText(c.getTitulo());
 
@@ -65,7 +66,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.viewHolder> {
                         Aula a = new Aula();
                         a.setTitulo(campoMateria.getText().toString());
                         CardSql cardSql = CardSql.getInstance(context);
-                        if(cardSql.novaMateria(a,c.getCodigo()) != false){
+                        if(cardSql.novaMateria(a)){
                             Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT).show();
                         }else Toast.makeText(context, "Falha", Toast.LENGTH_SHORT).show();
                     }
