@@ -1,38 +1,35 @@
-package br.com.lucas.feira.juliaapp;
+package br.com.lucas.feira.juliaapp.Activity;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import br.com.lucas.feira.juliaapp.Adapter.CardAdapter;
 import br.com.lucas.feira.juliaapp.Adapter.MateriaAdapter;
+import br.com.lucas.feira.juliaapp.Interfaces.CardAdapterInterface;
+import br.com.lucas.feira.juliaapp.Interfaces.MateriaAdapterInterface;
+import br.com.lucas.feira.juliaapp.SQLite.CardSql;
 import br.com.lucas.feira.juliaapp.Entidade.Aula;
-import br.com.lucas.feira.juliaapp.Entidade.Card;
+import br.com.lucas.feira.juliaapp.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MateriasActivity extends AppCompatActivity {
+public class MateriasActivity extends AppCompatActivity implements MateriaAdapterInterface {
 
     @BindView(R.id.recyclerMateria)
     RecyclerView rView;
-    CardSql cardSql;
-    List<Aula> aulas;
-    private MateriaAdapter cardAdapter;
+
+    private CardSql cardSql;
     int idDia;
-    Aula aula;
 
     @BindView(R.id.ok)
     FloatingActionButton ok;
@@ -49,16 +46,9 @@ public class MateriasActivity extends AppCompatActivity {
 
         idDia = getIntent().getIntExtra("id_dia", -1);
 
-        if (idDia > -1) {
-            aulas = cardSql.listaMaterias(idDia);
-
-        }
-        cardAdapter = new MateriaAdapter(aulas, this);
-
         rView.setLayoutManager(new LinearLayoutManager(this));
-        rView.setAdapter(cardAdapter);
 
-
+        doList();
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +72,7 @@ public class MateriasActivity extends AppCompatActivity {
                         CardSql cardSql = CardSql.getInstance(getBaseContext());
                         if (cardSql.novaMateria(a)) {
                             Toast.makeText(MateriasActivity.this, "Sucesso", Toast.LENGTH_SHORT).show();
-                            cardAdapter.update(a);
+                            doList();
                             dialogInterface.dismiss();
                         } else
                             Toast.makeText(MateriasActivity.this, "Falha", Toast.LENGTH_SHORT).show();
@@ -106,5 +96,70 @@ public class MateriasActivity extends AppCompatActivity {
             finish();
         }
         return true;
+    }
+
+    @Override
+    public void alterar(final Aula aula) {
+        // Criando o AlertDialog
+        final AlertDialog.Builder dialogConstruido = new AlertDialog.Builder(MateriasActivity.this);
+        // Titulo do Dialog
+        dialogConstruido.setTitle("Alterar Matéria");
+        // Colocando EditText para usuario escrever
+
+        final EditText campoMateria = new EditText(MateriasActivity.this);
+        // Incluir view no Dialog
+        dialogConstruido.setView(campoMateria);
+
+        dialogConstruido.setPositiveButton("Alterar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                aula.setTitulo(campoMateria.getText().toString());
+                if (cardSql.updateMaterias(aula) > -1) {
+                    mens("Sucesso ao alterar");
+                    doList();
+                } else {
+                    mens("Problema ao alterar !");
+                }
+            }
+        });
+
+        dialogConstruido.show();
+    }
+
+    @Override
+    public void deletar(final Aula aula) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MateriasActivity.this);
+
+        builder.setTitle("Deseja realmente excluir :?");
+
+        builder.setPositiveButton("Sim !", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (cardSql.deletaMateria(aula.getCodigo().toString())) {
+                    mens("Removido com sucesso !");
+                    doList();
+                } else {
+                    mens("Falha ao remover");
+                }
+            }
+        });
+
+        builder.setNegativeButton("Não !", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                mens("Okay ...");
+            }
+        });
+
+        builder.show();
+    }
+
+    private void doList() {
+        List<Aula> lista = cardSql.listaMaterias(idDia);
+        rView.setAdapter(new MateriaAdapter(lista, MateriasActivity.this, MateriasActivity.this));
+    }
+
+    private void mens(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 }

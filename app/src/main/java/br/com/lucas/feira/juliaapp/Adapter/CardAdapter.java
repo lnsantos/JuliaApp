@@ -1,8 +1,6 @@
 package br.com.lucas.feira.juliaapp.Adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -11,17 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
-import br.com.lucas.feira.juliaapp.CardSql;
-import br.com.lucas.feira.juliaapp.Entidade.Aula;
 import br.com.lucas.feira.juliaapp.Entidade.Card;
 import br.com.lucas.feira.juliaapp.Interfaces.CardAdapterInterface;
-import br.com.lucas.feira.juliaapp.MateriasActivity;
+import br.com.lucas.feira.juliaapp.Activity.MateriasActivity;
 import br.com.lucas.feira.juliaapp.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
