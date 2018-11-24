@@ -113,7 +113,7 @@ public class MateriasActivity extends AppCompatActivity implements MateriaAdapte
         dialogConstruido.setPositiveButton("Alterar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                aula.setTitulo(campoMateria.getText().toString());
+                aula.setTitulo(campoMateria.getText().toString().trim());
                 if (cardSql.updateMaterias(aula) > -1) {
                     mens("Sucesso ao alterar");
                     doList();
