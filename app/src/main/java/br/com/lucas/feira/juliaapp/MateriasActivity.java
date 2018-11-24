@@ -32,6 +32,7 @@ public class MateriasActivity extends AppCompatActivity {
     List<Aula> aulas;
     private MateriaAdapter cardAdapter;
     int idDia;
+    Aula aula;
 
     @BindView(R.id.ok)
     FloatingActionButton ok;
@@ -50,6 +51,7 @@ public class MateriasActivity extends AppCompatActivity {
 
         if (idDia > -1) {
             aulas = cardSql.listaMaterias(idDia);
+
         }
         cardAdapter = new MateriaAdapter(aulas, this);
 

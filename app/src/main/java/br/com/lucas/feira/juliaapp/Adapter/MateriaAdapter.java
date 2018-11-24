@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 public class MateriaAdapter  extends RecyclerView.Adapter<MateriaAdapter.ViewHolder>{
     List<Aula> aulas;
     Context context;
-
+    CardSql cardSql = CardSql.getInstance(context);
     public MateriaAdapter(List<Aula> aulas, Context context) {
         this.aulas = aulas;
         this.context = context;
@@ -41,7 +41,7 @@ public class MateriaAdapter  extends RecyclerView.Adapter<MateriaAdapter.ViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
-        final Aula a = aulas.get(i);
+         Aula a = aulas.get(i);
         viewHolder.titulo.setText(a.getTitulo());
 
         viewHolder.alterar.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +62,6 @@ public class MateriaAdapter  extends RecyclerView.Adapter<MateriaAdapter.ViewHol
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         a.setTitulo(campoMateria.getText().toString());
-                        CardSql cardSql = CardSql.getInstance(context);
                         if(cardSql.updateMaterias(a) > -1){
                             aulas.get(i);
                             notifyItemChanged(i);
@@ -81,11 +80,12 @@ public class MateriaAdapter  extends RecyclerView.Adapter<MateriaAdapter.ViewHol
         viewHolder.deletar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CardSql cardSql = CardSql.getInstance(context);
                 if(cardSql.deletaMateria(a.getCodigo().toString())){
                     aulas.remove(a);
-                    notifyDataSetChanged();
+                    notifyItemChanged(aulas.size());
                     Toast.makeText(context, "Removido com sucesso!", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "Saia e volte, para excluir esse item", Toast.LENGTH_SHORT).show();
                 }
             }
         });
