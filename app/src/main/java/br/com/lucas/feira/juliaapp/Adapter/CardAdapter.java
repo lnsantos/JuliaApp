@@ -62,34 +62,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.viewHolder> {
         holder.btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Criando o AlertDialog
-                final AlertDialog.Builder dialogConstruido = new AlertDialog.Builder(context);
-                // Titulo do Dialog
-                dialogConstruido.setTitle("Adicionar Matéria");
-                // Colocando EditText para usuario escrever
 
-                final EditText campoMateria = new EditText(context);
-                // Incluir view no Dialog
-                dialogConstruido.setView(campoMateria);
-                // Botão para adicionar um cartão
-                dialogConstruido.setPositiveButton("Adicionar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Aula a = new Aula();
-                        a.setTitulo(campoMateria.getText().toString());
-                        CardSql cardSql = CardSql.getInstance(context);
-                        if(cardSql.novaMateria(a)){
-                            Toast.makeText(context, "Sucesso", Toast.LENGTH_SHORT).show();
-                        }else Toast.makeText(context, "Falha", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                dialogConstruido.setNegativeButton("Fecha", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-                dialogConstruido.show();
             }
         });
     }

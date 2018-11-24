@@ -96,7 +96,16 @@ public class CardSql extends SQLiteOpenHelper {
         return cards;
     }
 
+    public long updateMaterias(Aula cs){
+        ContentValues cv = new ContentValues();
+        cv.put("titulo",cs.getTitulo());
+       long resultado = db.update("aula",cv,"codigo =?", new String[]{String.valueOf(cs.getCodigo())});
+       return resultado;
+    }
 
+    public boolean deletaMateria(String codigo){
+        return db.delete("aula", "codigo = ?", new String[]{codigo}) > 0;
+    }
 
     public List<Card> listarCards(){
         Cursor c = db.query("card",null,null,null,null, null,null);
