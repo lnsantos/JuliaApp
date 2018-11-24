@@ -130,7 +130,7 @@ public class MateriasActivity extends AppCompatActivity implements MateriaAdapte
     public void deletar(final Aula aula) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MateriasActivity.this);
 
-        builder.setTitle("Deseja realmente excluir :?");
+        builder.setTitle("Deseja realmente excluir ?");
 
         builder.setPositiveButton("Sim !", new DialogInterface.OnClickListener() {
             @Override
