@@ -47,8 +47,6 @@ public class CardSql extends SQLiteOpenHelper {
                 "id_card INTEGER," +
                 "FOREIGN KEY(id_card) REFERENCES card(codigo)" +
                 ");");
-
-        db.execSQL("INSERT INTO card(titulo) values('Segunda-Feira'),('Terça-Feira'),('Quarta-Feira'),('Quinta-Feira'),('Sexta-Feira'),('Sábado'),('Domingo')");
     }
 
     @Override
@@ -57,7 +55,7 @@ public class CardSql extends SQLiteOpenHelper {
     }
 
     public List<Aula> listaMaterias(int idDia){
-        Cursor c = db.query("aula", null, "codigo = ?", new String[]{String.valueOf(idDia)}, null, null, null);
+        Cursor c = db.query("aula", null, "codigo = "+idDia, null, null, null, null);
         return toListAulas(c);
     }
     private List<Aula> toListAulas(Cursor c){
