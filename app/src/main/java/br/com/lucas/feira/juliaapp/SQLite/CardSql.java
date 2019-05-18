@@ -55,7 +55,7 @@ public class CardSql extends SQLiteOpenHelper {
     }
 
     public List<Aula> listaMaterias(int idDia){
-        Cursor c = db.query("aula", null, "codigo = "+idDia, null, null, null, null);
+        Cursor c = db.query("aula", null, "id_card = ?", new String[]{String.valueOf(idDia)}, null, null, null);
         return toListAulas(c);
     }
     private List<Aula> toListAulas(Cursor c){

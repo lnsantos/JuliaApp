@@ -1,6 +1,7 @@
 package br.com.lucas.feira.juliaapp.Activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -42,10 +43,11 @@ public class MateriasActivity extends AppCompatActivity implements MateriaAdapte
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Intent it = getIntent();
         cardSql = CardSql.getInstance(this);
 
         idDia = getIntent().getIntExtra("id_dia", -1);
-
+        Toast.makeText(this, "Card Selecionado : " + idDia, Toast.LENGTH_SHORT).show();
         rView.setLayoutManager(new LinearLayoutManager(this));
 
         doList();
